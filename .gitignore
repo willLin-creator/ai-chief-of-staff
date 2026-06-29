@@ -1,0 +1,57 @@
+# =====================================================================
+#  SECRETS — never commit. (Broad globs on purpose.)
+# =====================================================================
+*token*.json
+*cred*.json
+*credential*
+*secret*
+*.key
+*.pem
+*oauth*.json
+gcp-oauth.keys.json
+.env
+.env.*
+!.env.example
+
+# =====================================================================
+#  PERSONAL RUNTIME DATA — your real life. Stays on your machine only.
+#  The repo ships *.example.* templates instead.
+# =====================================================================
+/goals.yaml
+/my-tasks.yaml
+/lessons.md
+/CURRENT_TASK.md
+/product-ideas.yaml
+# Memory (second brain): ignore your real facts, ship only the examples + index template
+/memory/*
+!/memory/README.md
+!/memory/MEMORY.example.md
+!/memory/EXAMPLE-*.md
+/learnings/
+/meeting-notes/
+/task-archive/
+/product-ideas-archive/
+/sessions/
+/projects/
+/history.jsonl
+
+# Real contact files (keep the EXAMPLE ones)
+/contacts/*.md
+!/contacts/EXAMPLE-*.md
+
+# Your filled-in persona files live at repo root and are private.
+# The committed templates live in persona/ instead.
+/SOUL.md
+/IDENTITY.md
+/STRATEGY.md
+/voice-profile.md
+
+# =====================================================================
+#  OS / tooling noise
+# =====================================================================
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/

@@ -1,0 +1,28 @@
+# my-tasks.example.yaml — copy to my-tasks.yaml and make it yours.
+# Claude reads this on substantive sessions to surface what's due, overdue, or at risk.
+# Keep ONLY live tasks here; archive completed ones elsewhere if the list grows large.
+
+tasks:
+  - id: task-001
+    title: "Draft the Q2 board update"
+    due: "2026-02-01"
+    priority: 1                 # 1 (high) .. 3 (normal) .. 5 (low)
+    goal: "goal-1"
+    status: "in_progress"       # pending | in_progress | blocked | complete
+    notes: "Lead with activation numbers. Pull latest from analytics."
+
+  - id: task-002
+    title: "Reply to Jane Smith re: partnership scope"
+    due: "2026-01-20"
+    priority: 2
+    goal: "goal-2"
+    status: "pending"
+    notes: "She's waiting. Propose two specific call times."
+
+  - id: task-003
+    title: "Block 2-hour deep-work sessions for next week"
+    due: "2026-01-19"
+    priority: 2
+    goal: "goal-3"
+    status: "pending"
+    notes: "Tue/Thu mornings preferred."

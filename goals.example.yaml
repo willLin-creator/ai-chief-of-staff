@@ -1,0 +1,31 @@
+# goals.example.yaml — copy to goals.yaml and make it yours.
+# This is the source of truth for "what should I be working on?"
+# Claude reads it to keep you focused and to push back when work drifts.
+
+goals:
+  - id: goal-1
+    title: "Ship the v2 onboarding flow"
+    why: "Activation is the #1 lever on retention this quarter."
+    priority: 1                 # 1 = highest
+    horizon: "this quarter"
+    status: "in_progress"       # not_started | in_progress | at_risk | done
+    last_update: "2026-01-15"
+    success_looks_like: "New-user activation rate up from 40% to 60%."
+
+  - id: goal-2
+    title: "Deepen top-10 customer relationships"
+    why: "Renewals concentrate here; trust is the moat."
+    priority: 2
+    horizon: "ongoing"
+    status: "in_progress"
+    last_update: "2026-01-12"
+    success_looks_like: "Each top-10 account has a live, current relationship note and a recent touchpoint."
+
+  - id: goal-3
+    title: "Protect deep-work time"
+    why: "Strategy work needs uninterrupted blocks; meetings are crowding it out."
+    priority: 3
+    horizon: "ongoing"
+    status: "at_risk"
+    last_update: "2026-01-10"
+    success_looks_like: "At least 3 protected 2-hour blocks per week."

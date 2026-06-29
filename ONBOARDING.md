@@ -1,0 +1,129 @@
+# Onboarding — set up your AI Chief of Staff
+
+A guided, step-by-step setup. Plan for **30-45 minutes**. Works with any AI agent tool
+that can read a context/instructions file and run prompts — Claude Code, Cursor, Gemini
+CLI, and others.
+
+---
+
+## How this maps to your tool
+
+This kit uses Claude Code conventions by default, but the design is tool-agnostic.
+Wherever a step says `CLAUDE.md` or `/command`, substitute your tool's equivalent:
+
+| Concept | Claude Code | Cursor | Gemini CLI | Generic |
+|---|---|---|---|---|
+| Context / instructions file | `CLAUDE.md` | `.cursor/rules` | `GEMINI.md` | your agent's system/context file |
+| Reusable command | `/gm` etc. (`commands/`) | a saved prompt | a saved prompt | "paste the skill's prompt" |
+| Config / home dir | `~/.claude/` | project root | `~/.gemini/` | wherever your agent reads config |
+| Memory loaded each session | auto-loads `MEMORY.md` | `@`-reference the file | include in context | paste/reference your index |
+
+If your tool can't auto-load context, just paste the relevant file at the start of a
+session. Everything here is plain Markdown, so any tool can use it.
+
+---
+
+## Step 0 — Prerequisites (5 min)
+
+- An AI agent tool installed and working.
+- (Optional) accounts for the integrations you'll use — see `docs/INTEGRATIONS.md`.
+- Python 3 if you want the Google Docs/Sheets helper scripts.
+
+## Step 1 — Clone and copy templates (2 min)
+
+```bash
+git clone <your-fork-url> ai-chief-of-staff
+cd ai-chief-of-staff
+cp goals.example.yaml goals.yaml
+cp my-tasks.example.yaml my-tasks.yaml
+cp voice-profile.example.md voice-profile.md
+cp .env.example .env
+cp memory/MEMORY.example.md memory/MEMORY.md
+```
+
+These copies are gitignored — they hold your real data and never get committed.
+
+## Step 2 — Tell it who you are (10 min)
+
+Fill in every `{{PLACEHOLDER}}`:
+
+- [ ] `CLAUDE.md` — name, role, company, hard constraints, integrations
+- [ ] `persona/SOUL.md` → save your filled copy as `SOUL.md` (root, gitignored)
+- [ ] `persona/IDENTITY.md` and `persona/STRATEGY.md` → same
+- [ ] `goals.yaml` — your real current priorities
+
+This is the foundation. Spend the most time on `CLAUDE.md` and `SOUL.md`.
+
+## Step 3 — Capture your voice (10 min)
+
+So every drafted email/Slack/doc sounds like *you*, not like an AI. Run the `voice`
+skill (`skills/voice/SKILL.md`). Give it real samples — best to worst:
+
+1. Point it at a **Slack thread** or your **recent sent emails**, or
+2. **Paste 2-3 short messages** (one casual, one professional, one handling a hard thing).
+
+It extracts your tone, cadence, sign-offs, and quirks into `voice-profile.md`. Review
+that file and fix anything that's off. Confirm `CLAUDE.md` Part 4 points to it.
+
+- [ ] `voice-profile.md` built and reviewed
+
+## Step 4 — Connect your tools, by role (5-15 min)
+
+Open `docs/INTEGRATIONS.md`, find the row closest to your role (Founder, PM, Engineer,
+Sales, Personal), and connect the **Core** set first. You don't need everything — every
+skill skips gracefully when an integration isn't connected.
+
+- [ ] Core integrations for your role connected
+- [ ] `CLAUDE.md` Part 11 "Source Routing" updated to list what you connected
+
+## Step 5 — Turn on the second brain (3 min)
+
+Persistent memory is what makes the assistant compound instead of starting cold.
+
+```bash
+mkdir -p memory learnings meeting-notes
+touch lessons.md CURRENT_TASK.md
+```
+
+Read `skills/second-brain/SKILL.md` for the memory format. You already copied
+`MEMORY.md` in Step 1.
+
+- [ ] memory dirs + `lessons.md` + `CURRENT_TASK.md` created
+
+## Step 6 — (Optional) Schedule + Slack delivery
+
+To have it run on its own and post to a channel you watch, follow
+`skills/scheduled-agents/SKILL.md`: create a dedicated CoS Slack channel, set the
+placeholders, and schedule the morning / midday / evening / market-pulse triggers.
+
+- [ ] CoS Slack channel created and placeholders set (if using)
+
+## Step 7 — First run and verify (5 min)
+
+- [ ] Run the morning brief (`/gm` or paste its prompt) — does it read your calendar/tasks?
+- [ ] Run a triage (`/triage`) — does it tier correctly?
+- [ ] Ask it to **draft a test email**, then check it against `voice-profile.md`. Sound like you?
+
+If the email doesn't sound like you, add a better sample to `voice-profile.md` and retry.
+
+## You're live — the 1-week tuning loop
+
+The system is designed to improve through small, frequent edits:
+
+- When a draft or decision misses, correct it and log the correction to `lessons.md`.
+- When you learn something durable, save a memory (`skills/second-brain`).
+- Re-read `CLAUDE.md` after the first week and tighten anything that felt off.
+
+---
+
+## Setup checklist
+
+```
+[ ] Step 1  Templates copied
+[ ] Step 2  CLAUDE.md + persona + goals filled
+[ ] Step 3  Voice profile built and verified
+[ ] Step 4  Integrations connected for your role
+[ ] Step 5  Second brain initialized
+[ ] Step 6  (optional) Scheduled agents + Slack
+[ ] Step 7  First brief run + voice verified on a test draft
+```
