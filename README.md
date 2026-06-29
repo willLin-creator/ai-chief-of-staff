@@ -70,6 +70,21 @@ ai-chief-of-staff/
 └── docs/                      # SETUP.md, INTEGRATIONS.md (role-based), ARCHITECTURE.md
 ```
 
+## Portability — works with any capable agent
+
+The framework is plain Markdown plus two Python scripts, so the **content is agent-agnostic**: the operating system, persona, goals, memory, voice profile, and skill prompts can be read and acted on by any LLM agent. The *intelligence lives in the text*, not in any one vendor's runtime.
+
+It was built and proven on **Claude Code**, where it runs with the least friction. Running it on another agent means adapting four glue points — the content stays the same, only the wiring changes:
+
+| Glue point | Claude Code | Other agents (Cursor, Gemini, custom, …) |
+|---|---|---|
+| Load context | auto-loads `CLAUDE.md` + `MEMORY.md` | point the tool at the file or paste it (`.cursor/rules`, `GEMINI.md`, …) |
+| Invoke a command | `/meeting`, `/gm`, … | paste the command file's prompt, or save it as the tool's prompt/snippet |
+| Trigger a skill | auto-invoked by its description | reference or paste the relevant `SKILL.md` |
+| Schedule it | scheduled agents | OS `cron`/`launchd` or a hosted runner that calls your agent |
+
+See `ONBOARDING.md` for the per-tool mapping.
+
 ## Quick start
 
 ```bash
@@ -94,7 +109,9 @@ first run. For reference detail, see [docs/SETUP.md](docs/SETUP.md) and
 
 ## Requirements
 
-- [Claude Code](https://claude.com/claude-code) — the only hard requirement
+- An AI agent that can read a context file and run prompts. Built and proven on
+  [Claude Code](https://claude.com/claude-code); adaptable to Cursor, Gemini CLI, or a
+  custom agent (see [Portability](#portability--works-with-any-capable-agent))
 - Optional MCP servers for the integrations you want. **You don't need them all** —
   see **[docs/INTEGRATIONS.md](docs/INTEGRATIONS.md)** for a role-based setup guide
   (Founder, PM, Engineer, Sales, Personal). Common ones: Gmail, Google Calendar,
