@@ -90,15 +90,23 @@ Read `skills/second-brain/SKILL.md` for the memory format. You already copied
 
 - [ ] memory dirs + `lessons.md` + `CURRENT_TASK.md` created
 
-## Step 6 — (Optional) Schedule + Slack delivery
+## Step 6 — Make it run on its own (the point)
 
-To have it run on its own and post to a channel you watch, follow
-`skills/scheduled-agents/SKILL.md`: create a dedicated CoS Slack channel, set the
-placeholders, and schedule the morning / midday / evening / market-pulse triggers.
+This is what turns the kit from "commands you run" into a chief of staff that operates
+**around you**. Follow `skills/scheduled-agents/SKILL.md`: create a dedicated CoS Slack
+channel, set the placeholders, and schedule the morning / midday / evening / market-pulse
+runs. In steady state these run without you — the one command you'll still trigger by hand
+is `/meeting`.
 
-- [ ] CoS Slack channel created and placeholders set (if using)
+If your tool can't schedule yet, run the commands manually in the meantime, but set up
+scheduling as soon as you can. The autonomy is the design, not an add-on.
+
+- [ ] CoS Slack channel created, placeholders set, triggers scheduled
 
 ## Step 7 — First run and verify (5 min)
+
+Day-to-day you won't run these by hand — they're scheduled (Step 6). This is a one-time
+check that each piece works.
 
 - [ ] Run the morning brief (`/gm` or paste its prompt) — does it read your calendar/tasks?
 - [ ] Run a triage (`/triage`) — does it tier correctly?
@@ -124,6 +132,6 @@ The system is designed to improve through small, frequent edits:
 [ ] Step 3  Voice profile built and verified
 [ ] Step 4  Integrations connected for your role
 [ ] Step 5  Second brain initialized
-[ ] Step 6  (optional) Scheduled agents + Slack
+[ ] Step 6  Scheduled agents + Slack (the autonomous layer)
 [ ] Step 7  First brief run + voice verified on a test draft
 ```

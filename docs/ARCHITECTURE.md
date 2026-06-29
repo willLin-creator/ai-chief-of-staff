@@ -20,17 +20,29 @@ Claude reads these in order. Each grounds the next.
 
 ## The skill layers
 
-### Reactive (you invoke them)
+### Default mode: autonomous
 
-Slash commands in `commands/`:
+The system is built to operate **around you**. In steady state the scheduled layer and
+the work-tracker run the day; you trigger almost nothing.
 
-- `/gm` — morning briefing
-- `/triage` — inbox triage with drafted replies
-- `/my-tasks` — task tracking + execution
-- `/meeting` — post-meeting processing
-- `/enrich` — relationship CRM maintenance
+- `skills/scheduled-agents/` — runs the brief / triage / wrap / market-pulse on a
+  schedule and posts to your channel.
+- `skills/work-tracker/` — the "knock on the door" chief of staff that plans the day,
+  scores deliverables, and interrupts only when something needs you.
 
-### Proactive (they come to you)
+### On demand (when you want to pull, not wait)
+
+The same capabilities are also slash commands in `commands/`, for when you want
+something now:
+
+- `/meeting` — **the one most people actually run by hand**: process a meeting when
+  you need its content for your next task.
+- `/gm`, `/triage`, `/my-tasks`, `/enrich` — manual entry points to what the scheduled
+  layer otherwise runs for you.
+- Product track (`commands/product/`) — `/prd`, `/roadmap`, `/idea`, etc., invoked when
+  you're doing product work.
+
+### How the work-tracker runs (the proactive engine)
 
 `skills/work-tracker/` — the "knock on the door" chief of staff. Two modes:
 

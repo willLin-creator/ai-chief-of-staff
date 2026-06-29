@@ -2,6 +2,8 @@
 
 An open-source operating system that turns [Claude Code](https://claude.com/claude-code) into a proactive personal chief of staff: it triages your inboxes, manages your tasks against your goals, processes your meetings, deepens your key relationships, and proactively surfaces what matters most, on a schedule, in your own Slack channel.
 
+*Built, refined, and battle-tested over **3,000+ hours** of real daily use.*
+
 This is a **template**. It ships with the full framework and example data, but none of the author's personal information. You fill in the placeholders and make it yours.
 
 ---
@@ -24,6 +26,10 @@ This is a **template**. It ships with the full framework and example data, but n
 ## The philosophy
 
 The default posture is **clarity → focus → decision → action → improve**. This isn't a passive assistant. It's configured to push hard, challenge your priorities, surface opportunity cost, and optimize for long-term leverage, while never sending a message on your behalf without explicit approval.
+
+## How it's meant to run
+
+This operates **around you, not on command**. Once configured, the scheduled layer runs your brief, triage, wrap, and market-pulse, and the `work-tracker` knocks only when something genuinely needs you. **In steady state you trigger almost nothing.** The one command most people run by hand is **`/meeting`** — when you need a meeting processed for your next task. Treat the other commands as manual entry points to capabilities that otherwise just run.
 
 ## Architecture
 
@@ -48,7 +54,7 @@ ai-chief-of-staff/
 ├── my-tasks.example.yaml      # → copy to my-tasks.yaml
 ├── voice-profile.example.md   # → built by the voice skill from your real messages
 ├── contacts/                  # EXAMPLE contact (real ones are gitignored)
-├── commands/                  # core: /gm /triage /my-tasks /enrich /meeting
+├── commands/                  # mostly run on a schedule; /meeting is the main on-demand one
 │   └── product/               # product track: /prd /roadmap /roadmap-edit /idea /insights /bet
 ├── memory/                    # second brain: MEMORY.md index + atomic facts (real ones gitignored)
 ├── skills/
