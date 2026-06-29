@@ -2,9 +2,13 @@
 
 An open-source operating system that turns [Claude Code](https://claude.com/claude-code) into a proactive personal chief of staff: it triages your inboxes, manages your tasks against your goals, processes your meetings, deepens your key relationships, and proactively surfaces what matters most, on a schedule, in your own Slack channel.
 
-*Built, refined, and battle-tested over **3,000+ hours** of real daily use.*
-
 This is a **template**. It ships with the full framework and example data, but none of the author's personal information. You fill in the placeholders and make it yours.
+
+## Background
+
+This is a genericized, open-source adaptation of a personal AI chief-of-staff system I've built, refined, and relied on daily for **3,000+ hours** of real use. It runs my actual workflow: triaging my inboxes, processing my meetings, tracking my work against my goals, capturing knowledge into a second brain, and operating proactively in the background.
+
+The public repository is a fresh extraction with every personal and company detail replaced by templates, so its commit history is recent. **The system it's distilled from is not.** What's here is the framework, hardened by real use, with the private data stripped out.
 
 ---
 
