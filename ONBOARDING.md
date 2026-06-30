@@ -8,11 +8,11 @@ CLI, and others.
 
 ## Fastest path: let your agent run it
 
-If you're using Claude Code, you don't have to do this by hand. This installs into your Claude config dir (`~/.claude/`), not the folder you cloned into, so the agent places it there first, then onboards you. Clone the repo and paste:
+If you're using Claude Code, you don't have to do this by hand. Just point it at the repo:
 
-> I just cloned the ai-chief-of-staff repo. Install it into my Claude config: copy CLAUDE.md and the example data into ~/.claude, symlink commands/ and skills/ so the slash commands and skills load, and create the memory/learnings/meeting-notes folders. Then onboard me per ONBOARDING.md: source from my existing docs and recent messages where you can, interview me only for what's missing, and fill in CLAUDE.md, the persona files, goals, and my voice profile. Don't make me hand-edit templates.
+> Hey Claude, I want to start using https://github.com/willLin-creator/ai-chief-of-staff. Run whatever is necessary to set it up.
 
-It places the system and drives setup interactively. Once installed, `/onboard` re-runs it anytime. The steps below are the same flow, for reference or for doing it manually.
+Claude reads the repo's setup steps (in the README), installs the framework into your Claude config (`~/.claude/`), and runs this onboarding interactively, filling the files in for you. The steps below are the same flow, for reference or for doing it manually.
 
 ## How this maps to your tool
 

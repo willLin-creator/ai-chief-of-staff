@@ -100,23 +100,21 @@ Adapting to another agentic runtime means swapping these glue points (the conten
 
 See `ONBOARDING.md` for the mapping.
 
-## Quick start
+## Get started
 
-```bash
-git clone <your-fork-url> ai-chief-of-staff
-cd ai-chief-of-staff
-cp goals.example.yaml goals.yaml
-cp my-tasks.example.yaml my-tasks.yaml
-cp .env.example .env          # then fill in
-```
+Point your agent at the repo. In Claude Code, that's the whole user step:
 
-**Then let your agent install and onboard you.** This runs from your Claude config dir (`~/.claude/`), not the folder you cloned into, so step one is placing it there. Paste this to Claude Code:
+> Hey Claude, I want to start using https://github.com/willLin-creator/ai-chief-of-staff. Run whatever is necessary to set it up.
 
-> I just cloned the ai-chief-of-staff repo. Install it into my Claude config: copy CLAUDE.md and the example data into ~/.claude, symlink commands/ and skills/ so the slash commands and skills load, and create the memory/learnings/meeting-notes folders. Then onboard me per ONBOARDING.md: source from my existing docs and recent messages where you can, interview me only for what's missing, and fill in CLAUDE.md, the persona files, goals, and my voice profile. Don't make me hand-edit templates.
+Claude reads the setup below, clones the repo, installs it into your Claude config, and runs the onboarding interview, filling everything in for you.
 
-That places the system correctly, then drives setup interactively. Once installed, `/onboard` re-runs the guided setup anytime.
+**What the agent does (it follows this; you don't paste any of it):**
+1. Clone the repo locally.
+2. Install into the Claude config dir `~/.claude/`: copy `CLAUDE.md` and the example data, symlink `commands/` and `skills/`, and create `memory/`, `learnings/`, `meeting-notes/`, `lessons.md`, and `CURRENT_TASK.md`. (Details: [docs/SETUP.md](docs/SETUP.md).)
+3. Run onboarding via the `/onboard` skill / [ONBOARDING.md](ONBOARDING.md): source `IDENTITY.md` + `STRATEGY.md` from the user's company and strategy docs, capture their voice from real messages, fill `CLAUDE.md` + persona + `goals.yaml`, and interview only for what isn't written down.
+4. Verify with a live `/gm`, then point them at `skills/scheduled-agents/SKILL.md` for autonomy.
 
-**Prefer to do it by hand?** [ONBOARDING.md](ONBOARDING.md) is the same flow as a guided, tool-agnostic checklist (~30-45 min; works with Claude Code, Cursor, Gemini, and others). For reference detail, see [docs/SETUP.md](docs/SETUP.md) and [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
+Requires write access to `~/.claude/` and the MCP connectors for whatever integrations you want. Prefer to set it up by hand? [ONBOARDING.md](ONBOARDING.md) and [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md) walk through it.
 
 ## Privacy & safety
 
