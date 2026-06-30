@@ -102,11 +102,13 @@ cp my-tasks.example.yaml my-tasks.yaml
 cp .env.example .env          # then fill in
 ```
 
-**New here? Start with [ONBOARDING.md](ONBOARDING.md)** — a guided, tool-agnostic,
-step-by-step setup (~30-45 min) that works with Claude Code, Cursor, Gemini, and others,
-and walks you through identity, **voice capture**, integrations, the second brain, and a
-first run. For reference detail, see [docs/SETUP.md](docs/SETUP.md) and
-[docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
+**Then let your agent onboard you.** In Claude Code, run `/onboard`, or paste this:
+
+> Read ONBOARDING.md and set me up as my AI chief of staff. Walk me through it one step at a time, like onboarding a new hire: fill in CLAUDE.md and the persona files from my answers, capture my writing voice from real samples, and tell me which integrations to connect for my role. Fill the files in for me as we go, and don't dump every step at once.
+
+It drives the setup interactively and writes the files for you.
+
+**Prefer to do it by hand?** [ONBOARDING.md](ONBOARDING.md) is the same flow as a guided, tool-agnostic checklist (~30-45 min; works with Claude Code, Cursor, Gemini, and others). For reference detail, see [docs/SETUP.md](docs/SETUP.md) and [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
 
 ## Privacy & safety
 

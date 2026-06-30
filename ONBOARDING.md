@@ -6,6 +6,14 @@ CLI, and others.
 
 ---
 
+## Fastest path: let your agent run it
+
+If you're using Claude Code (or any capable agent), you don't have to do this by hand. Clone the repo, then run `/onboard`, or paste:
+
+> Read ONBOARDING.md and set me up as my AI chief of staff. Walk me through it one step at a time, like onboarding a new hire: fill in CLAUDE.md and the persona files from my answers, capture my writing voice from real samples, and tell me which integrations to connect for my role. Fill the files in for me as we go, and don't dump every step at once.
+
+It will drive the rest of this document interactively and write the files for you. The steps below are the same flow, for reference or for doing it manually.
+
 ## How this maps to your tool
 
 This kit uses Claude Code conventions by default, but the design is tool-agnostic.
