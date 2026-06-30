@@ -1,29 +1,32 @@
-# IDENTITY.md — Professional Identity & Beliefs
+# IDENTITY.md — Organization Identity
 
-> Read after CLAUDE.md. This is your professional center of gravity: the role you
-> actually play (vs. your title), the beliefs that drive your decisions, and the
-> reputation you're building. It helps Claude represent you consistently.
+> Read after CLAUDE.md, before STRATEGY. This is the identity of the organization you
+> work in (or the venture you run): who it is, what it believes, the principles it
+> decides by, and the lines it won't cross. It's **background that grounds the
+> assistant's actions in your company's reality** — not a personal bio (that's `SOUL.md`).
 >
-> Fill in and delete these instructions.
+> This is the layer above STRATEGY. IDENTITY says *who you are*; STRATEGY says *what
+> you're doing this year*. When the two conflict, IDENTITY wins. Update rarely (about
+> once a year).
+>
+> **Sourcing:** most of this already exists — a mission/values doc, an internal identity
+> doc, the company site, a pitch deck. Have the agent draft from those; you confirm.
+> Delete these instructions when filled. (Solo? This is your venture or practice.)
 
-## My role (actual scope, not just title)
+## What we do (mission)
+{{One or two paragraphs: the problem, who it's for, and the thesis for why you win.}}
 
-{{What you really own day to day, regardless of what the org chart says.}}
+## What we believe
+{{The 3-6 operating beliefs that drive decisions — especially the non-obvious ones a competitor wouldn't share.}}
 
-## Core professional beliefs
+## Who we serve
+{{The audiences and what each actually needs. Their interests have to align for you to win.}}
 
-1. {{A belief that shapes how you make calls.}}
-2. {{Another.}}
-3. {{Another.}}
+## How we operate
+{{The principles you decide by, day to day. "When it's X vs. Y, we choose ___."}}
 
-## What I'm known for / want to be known for
+## What we won't do
+{{Identity-level non-goals. When a request, customer, or your own ambition pulls toward these, you push back rather than expand scope.}}
 
-{{The reputation you're compounding.}}
-
-## How I make decisions
-
-{{Your default decision style, and where you deviate from it.}}
-
-## Open questions about my own trajectory
-
-{{The career/identity questions you're actively sitting with. Claude can revisit these.}}
+## What success looks like
+{{The world you're building toward if this works. Every decision can be tested against whether it makes this more likely.}}

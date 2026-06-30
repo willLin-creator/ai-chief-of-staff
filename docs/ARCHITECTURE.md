@@ -15,8 +15,8 @@ Claude reads these in order. Each grounds the next.
 2. **`goals.yaml`** — current priorities. The source of truth for "what should I work on?"
 3. **`CLAUDE.md`** — the operating manual. Principles, guardrails, operating modes,
    writing voice, always-on responsibilities, and integrations.
-4. **`IDENTITY.md`** — your professional identity and beliefs. Keeps representation consistent.
-5. **`STRATEGY.md`** — the long-horizon picture. Keeps tactical work aligned with strategy.
+4. **`IDENTITY.md`** — your organization's identity (mission, beliefs, what it won't do). Background that grounds decisions in the company's reality.
+5. **`STRATEGY.md`** — your organization's current strategy and operating context. Keeps tactical work aligned with the plan.
 
 ## The skill layers
 

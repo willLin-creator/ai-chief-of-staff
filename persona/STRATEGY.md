@@ -1,29 +1,30 @@
-# STRATEGY.md — Current Strategic Picture
+# STRATEGY.md — Strategy
 
-> Read last. The longest-horizon context: where you're trying to take your work,
-> the bets you're making, and the constraints you're operating under. Update this
-> quarterly. Claude uses it to keep tactical work aligned with strategy.
+> Read last. This operationalizes IDENTITY: your organization's current strategy and the
+> operating context the assistant needs to **ground its actions**. When STRATEGY and
+> IDENTITY conflict, IDENTITY wins. Update quarterly.
 >
-> Fill in and delete these instructions.
+> **Sourcing:** best built from documents — a strategy doc, OKRs, a board deck, planning
+> notes. Have the agent read them and synthesize, then you confirm or tweak.
+> Delete these instructions when filled.
 
-## The 12-month picture
+## Target problem
+{{The problem you're solving and why it matters now.}}
 
-{{Where you're trying to be a year from now, professionally and otherwise.}}
+## Approach
+{{How you're solving it: the core premises, and the product/offering layers if relevant.}}
 
-## Active bets
+## Users & segments
+{{Who uses it, who buys it, and the segments in priority order. Note the buyer dynamic if the buyer isn't the user.}}
 
-| Bet | Thesis | How I'll know it's working | Revisit |
-|-----|--------|----------------------------|---------|
-| {{bet}} | {{why you believe it}} | {{leading indicator}} | {{date}} |
+## Key metrics
+{{The numbers that tell you it's working: usage/platform, commercial, and any moat or leverage measure.}}
 
-## Constraints I'm operating under
+## Tracks of work
+{{The 3-6 portfolios of work this period. Everything tactical should ladder up to one of these.}}
 
-{{Time, capital, political, personal — the real limits.}}
+## Non-goals (this period)
+{{What you're explicitly NOT doing right now — the operational version of IDENTITY's "won't do."}}
 
-## What I'm explicitly NOT doing right now
-
-{{The deprioritized list. As important as the active list.}}
-
-## Open strategic questions
-
-{{Things you haven't resolved yet. Claude should treat these as live, not settled.}}
+## Operating context
+{{The grounding facts the assistant should know: stage, the team and who owns what, key stakeholders and customers, the tools/analytics stack, decision rhythm, and open strategic questions.}}

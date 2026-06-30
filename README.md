@@ -50,8 +50,8 @@ A layered context system. Claude reads it in this order:
 SOUL.md        →  who you are, what you optimize for (the "why")
 goals.yaml     →  current priorities (source of truth for "what to work on")
 CLAUDE.md      →  how Claude operates: principles, guardrails, modes, voice
-IDENTITY.md    →  your professional identity and beliefs
-STRATEGY.md    →  your long-horizon strategic picture
+IDENTITY.md    →  your organization's identity: mission, beliefs, what it won't do
+STRATEGY.md    →  your organization's current strategy + operating context
 ```
 
 On top of that context sit the **skills** (slash commands + the proactive work-tracker) and the **integrations** (MCP servers for Gmail, Calendar, Slack, meeting notes).
@@ -77,20 +77,28 @@ ai-chief-of-staff/
 └── docs/                      # SETUP.md, INTEGRATIONS.md (role-based), ARCHITECTURE.md
 ```
 
-## Portability — works with any capable agent
+## Built for Claude Code
 
-The framework is plain Markdown plus two Python scripts, so the **content is agent-agnostic**: the operating system, persona, goals, memory, voice profile, and skill prompts can be read and acted on by any LLM agent. The *intelligence lives in the text*, not in any one vendor's runtime.
+This is built for and runs best on **Claude Code** (CLI agentic workflows). That's where you get the full operating system: auto-loaded `CLAUDE.md` + `MEMORY.md`, slash commands, auto-triggering skills, scheduled agents, and the file-based second brain.
 
-It was built and proven on **Claude Code**, where it runs with the least friction. Running it on another agent means adapting four glue points — the content stays the same, only the wiring changes:
+**Can you run it in any agent? Honestly, no, not as-is.** The *content* is plain Markdown, so the ideas are portable, but to actually run the system an agent needs three things: **local file access** (to read and write `CLAUDE.md`, `goals.yaml`, `memory/`, etc.), **tool/MCP use** (Gmail, Slack, Calendar), and a **scheduler** for the autonomous parts. What that means in practice:
 
-| Glue point | Claude Code | Other agents (Cursor, Gemini, custom, …) |
+| Runtime | What you get |
+|---|---|
+| **Claude Code** | Everything. The system as designed. |
+| **Another agentic CLI with file + tool access** (Cursor agent, etc.) | Most of it, by adapting the glue points below. |
+| **Chat-only apps** (Claude Desktop, ChatGPT, Gemini app) | A manual subset: load `CLAUDE.md` + a skill into a Project, connect the same MCP connectors, brief/triage in chat. No scheduling, no slash commands, no persistent file-based memory. |
+
+Adapting to another agentic runtime means swapping these glue points (the content stays the same):
+
+| Glue point | Claude Code | Elsewhere |
 |---|---|---|
-| Load context | auto-loads `CLAUDE.md` + `MEMORY.md` | point the tool at the file or paste it (`.cursor/rules`, `GEMINI.md`, …) |
-| Invoke a command | `/meeting`, `/gm`, … | paste the command file's prompt, or save it as the tool's prompt/snippet |
-| Trigger a skill | auto-invoked by its description | reference or paste the relevant `SKILL.md` |
-| Schedule it | scheduled agents | OS `cron`/`launchd` or a hosted runner that calls your agent |
+| Load context | auto-loads `CLAUDE.md` + `MEMORY.md` | point the tool at the file, or paste it |
+| Invoke a command | `/gm`, `/meeting`, … | paste the command's prompt |
+| Trigger a skill | auto-invoked by description | reference or paste the `SKILL.md` |
+| Schedule it | scheduled agents | OS `cron`/`launchd` calling a CLI |
 
-See `ONBOARDING.md` for the per-tool mapping.
+See `ONBOARDING.md` for the mapping.
 
 ## Quick start
 
@@ -102,11 +110,11 @@ cp my-tasks.example.yaml my-tasks.yaml
 cp .env.example .env          # then fill in
 ```
 
-**Then let your agent onboard you.** In Claude Code, run `/onboard`, or paste this:
+**Then let your agent install and onboard you.** This runs from your Claude config dir (`~/.claude/`), not the folder you cloned into, so step one is placing it there. Paste this to Claude Code:
 
-> Read ONBOARDING.md and set me up as my AI chief of staff. Walk me through it one step at a time, like onboarding a new hire: fill in CLAUDE.md and the persona files from my answers, capture my writing voice from real samples, and tell me which integrations to connect for my role. Fill the files in for me as we go, and don't dump every step at once.
+> I just cloned the ai-chief-of-staff repo. Install it into my Claude config: copy CLAUDE.md and the example data into ~/.claude, symlink commands/ and skills/ so the slash commands and skills load, and create the memory/learnings/meeting-notes folders. Then onboard me per ONBOARDING.md: source from my existing docs and recent messages where you can, interview me only for what's missing, and fill in CLAUDE.md, the persona files, goals, and my voice profile. Don't make me hand-edit templates.
 
-It drives the setup interactively and writes the files for you.
+That places the system correctly, then drives setup interactively. Once installed, `/onboard` re-runs the guided setup anytime.
 
 **Prefer to do it by hand?** [ONBOARDING.md](ONBOARDING.md) is the same flow as a guided, tool-agnostic checklist (~30-45 min; works with Claude Code, Cursor, Gemini, and others). For reference detail, see [docs/SETUP.md](docs/SETUP.md) and [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
 
