@@ -12,6 +12,13 @@ The public repository is a fresh extraction with every personal and company deta
 
 ---
 
+## What makes this different
+
+Most "AI assistant" repos are a prompt or a chatbot wrapper. Two things set this apart:
+
+1. **It's a second brain, not a session.** A file-based memory layer (atomic facts indexed by `MEMORY.md`, plus lessons, learnings, and a meeting-notes context library) means it remembers across sessions and compounds. It gets sharper over time instead of starting cold every chat.
+2. **It runs autonomously to 10x your day.** This isn't a tool you open. Scheduled agents and the "knock on the door" work-tracker run your brief, triage, and focus recommendations in the background, then surface the highest-leverage thing at the right moment in a Slack channel you own. You trigger almost nothing.
+
 ## What it does
 
 | Capability | How |
