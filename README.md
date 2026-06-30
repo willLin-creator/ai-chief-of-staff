@@ -4,6 +4,22 @@ An open-source operating system that turns [Claude Code](https://claude.com/clau
 
 This is a **template**. It ships with the full framework and example data, but none of the author's personal information. You fill in the placeholders and make it yours.
 
+## Quick Start
+
+Point your agent at the repo. In Claude Code, that's the whole user step:
+
+> Hey Claude, I want to start using https://github.com/willLin-creator/ai-chief-of-staff. Run whatever is necessary to set it up.
+
+Claude reads the setup below, clones the repo, installs it into your Claude config, and runs the onboarding interview, filling everything in for you.
+
+**What the agent does (it follows this; you don't paste any of it):**
+1. Clone the repo locally.
+2. Install into the Claude config dir `~/.claude/`: copy `CLAUDE.md` and the example data, symlink `commands/` and `skills/`, and create `memory/`, `learnings/`, `meeting-notes/`, `lessons.md`, and `CURRENT_TASK.md`. (Details: [docs/SETUP.md](docs/SETUP.md).)
+3. Run onboarding via the `/onboard` skill / [ONBOARDING.md](ONBOARDING.md): source `IDENTITY.md` + `STRATEGY.md` from the user's company and strategy docs, capture their voice from real messages, fill `CLAUDE.md` + persona + `goals.yaml`, and interview only for what isn't written down.
+4. Verify with a live `/gm`, then point them at `skills/scheduled-agents/SKILL.md` for autonomy.
+
+Requires write access to `~/.claude/` and the MCP connectors for whatever integrations you want. Prefer to set it up by hand? [ONBOARDING.md](ONBOARDING.md) and [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md) walk through it.
+
 ## Background
 
 This is a genericized, open-source adaptation of a personal AI chief-of-staff system I've built, refined, and relied on daily for **3,000+ hours** of real use. It runs my actual workflow: triaging my inboxes, processing my meetings, tracking my work against my goals, capturing knowledge into a second brain, and operating proactively in the background.
@@ -99,22 +115,6 @@ Adapting to another agentic runtime means swapping these glue points (the conten
 | Schedule it | scheduled agents | OS `cron`/`launchd` calling a CLI |
 
 See `ONBOARDING.md` for the mapping.
-
-## Get started
-
-Point your agent at the repo. In Claude Code, that's the whole user step:
-
-> Hey Claude, I want to start using https://github.com/willLin-creator/ai-chief-of-staff. Run whatever is necessary to set it up.
-
-Claude reads the setup below, clones the repo, installs it into your Claude config, and runs the onboarding interview, filling everything in for you.
-
-**What the agent does (it follows this; you don't paste any of it):**
-1. Clone the repo locally.
-2. Install into the Claude config dir `~/.claude/`: copy `CLAUDE.md` and the example data, symlink `commands/` and `skills/`, and create `memory/`, `learnings/`, `meeting-notes/`, `lessons.md`, and `CURRENT_TASK.md`. (Details: [docs/SETUP.md](docs/SETUP.md).)
-3. Run onboarding via the `/onboard` skill / [ONBOARDING.md](ONBOARDING.md): source `IDENTITY.md` + `STRATEGY.md` from the user's company and strategy docs, capture their voice from real messages, fill `CLAUDE.md` + persona + `goals.yaml`, and interview only for what isn't written down.
-4. Verify with a live `/gm`, then point them at `skills/scheduled-agents/SKILL.md` for autonomy.
-
-Requires write access to `~/.claude/` and the MCP connectors for whatever integrations you want. Prefer to set it up by hand? [ONBOARDING.md](ONBOARDING.md) and [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md) walk through it.
 
 ## Privacy & safety
 
