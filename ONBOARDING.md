@@ -60,7 +60,7 @@ Fill in every `{{PLACEHOLDER}}`:
 - [ ] `persona/IDENTITY.md` and `persona/STRATEGY.md` → same
 - [ ] `goals.yaml` — your real current priorities
 
-This is the foundation. Spend the most time on `CLAUDE.md` and `SOUL.md`.
+This is the foundation. `SOUL.md` (who you are and what you optimize for), `IDENTITY.md` (your professional beliefs), and `STRATEGY.md` (your 12-month bets) are reflective, not fill-in-the-blank, and each template's prompts are your interview questions. **If you ran `/onboard`, the agent interviews you through these and drafts them in your voice** instead of handing you blank files. Spend the most time here, especially on `SOUL.md`.
 
 ## Step 3 — Capture your voice (10 min)
 

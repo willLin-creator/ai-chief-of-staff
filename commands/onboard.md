@@ -9,7 +9,12 @@ You are onboarding the user to their own AI Chief of Staff. Use `ONBOARDING.md` 
 
 1. **Read `ONBOARDING.md` and `docs/SETUP.md`** so you know the full flow.
 2. **Go one step at a time.** For each, ask only what you need, then fill in the file:
-   - **Identity** → from their answers, fill `CLAUDE.md` and the `persona/` files (`SOUL.md`, `IDENTITY.md`, `STRATEGY.md`). Replace every `{{placeholder}}`.
+   - **Identity (the foundation — interview, don't form-fill).** These files are the throughline that grounds every later decision, so build them with care, in order, drafting each from the conversation and reading it back before moving on. Use the prompts inside each template stub as your interview questions:
+     - **`persona/SOUL.md`** (read first by the system; the "why"). Ask the reflective questions: who they are beyond their title, what they're optimizing their life for, where they want hard pushback and where they don't, what a good day looks like, what they keep getting wrong. Draft it in the first person, in their voice. This is the most important file; don't rush it.
+     - **`CLAUDE.md`** — the operational config: name, role, company, hard constraints, writing voice, integrations.
+     - **`persona/IDENTITY.md`** — the role they actually play vs. their title, the beliefs that drive their decisions, what they're known for, open questions about their trajectory.
+     - **`persona/STRATEGY.md`** — the 12-month picture, active bets, constraints, and what they're explicitly NOT doing.
+     Treat SOUL / IDENTITY / STRATEGY as short interviews. The quality of everything downstream depends on them.
    - **Goals** → turn their current priorities into `goals.yaml`.
    - **Voice** → run the `voice` skill: ask for a Slack thread, recent sent emails, or 2-3 pasted messages, and write `voice-profile.md` so drafts sound like them.
    - **Integrations** → ask their role, point them at `docs/INTEGRATIONS.md`, and confirm which MCP servers they connected. Update `CLAUDE.md` Part 11 to match.
