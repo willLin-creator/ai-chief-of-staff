@@ -17,7 +17,7 @@ This folder ships the *convention*. The *engine* is a standalone, deterministic 
 that checks the index budget, dangling `[[wikilinks]]`, graph orphans, hubs, and stale
 entries. It lives in its own repo so it can be shared across tools without drifting:
 
-**https://github.com/willLin-creator/agent-memory**
+**https://github.com/willLin-creator/agent-memory-vault**
 
 Clone it alongside this one and point it at this folder:
 
