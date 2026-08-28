@@ -18,10 +18,12 @@ input=$(cat)
 tool=$(printf '%s' "$input" | jq -r '.tool_name // ""' 2>/dev/null)
 
 if [ "$tool" = "Bash" ]; then
-  # Best-effort: only guard Google Docs writes via the gdocs.py helper.
+  # Best-effort: only guard Google Docs WRITES via the gdocs.py helper (the command line can
+  # carry a title or inline text). A command that merely mentions gdocs.py is not outbound and
+  # must not trip this.
   cmd=$(printf '%s' "$input" | jq -r '.tool_input.command // ""')
   case "$cmd" in
-    *gdocs.py*) content="$cmd" ;;
+    *gdocs.py*write*|*gdocs.py*create*) content="$cmd" ;;
     *) exit 0 ;;
   esac
 else

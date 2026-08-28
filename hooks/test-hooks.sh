@@ -31,6 +31,9 @@ expect_deny  "$H double hyphen"  "$(run $H "$(mcp mcp__slack_send_message 'Ships
 expect_allow "$H compound"       "$(run $H "$(mcp mcp__slack_send_message 'An AI-native, warm-but-direct reply.')")"
 expect_allow "$H bash non-gdocs" "$(run $H "$(bash_cmd 'echo "a — b"')")"
 expect_deny  "$H bash gdocs"     "$(run $H "$(bash_cmd 'python3 scripts/gdocs.py write --doc-id X --file "a — b.md"')")"
+expect_allow "$H bash gdocs read mention" "$(run $H "$(bash_cmd 'cat > doc.md <<EOF
+use gdocs.py read --doc-id X — then edit
+EOF')")"
 expect_allow "$H malformed"      "$(run $H 'not json')"
 
 # --- no-praise-outbound -----------------------------------------------------------------
