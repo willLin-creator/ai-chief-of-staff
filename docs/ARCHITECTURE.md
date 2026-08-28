@@ -70,6 +70,40 @@ What turns single sessions into a compounding system. Plain files, not a databas
 See `skills/second-brain/SKILL.md`. This is why the assistant gets sharper over time
 rather than starting cold each session.
 
+## The enforcement layer (hooks)
+
+Every rule the assistant follows sits in one of three tiers. **hook**: a script in `hooks/` wired
+into the runtime's tool events enforces it mechanically. **pinned**: it sits in an always-loaded
+block of `CLAUDE.md` or `MEMORY.md`. **recall**: a memory's description surfaces it when a task
+makes it relevant. Instructions get skipped under load; mechanisms do not. A rule earns a hook by
+recurring in `lessons.md`, and the hooks that ship (`hooks/README.md`) are the ones that did.
+
+Hooks fail open, act on outbound content rather than conversational replies, prefer a closed
+high-precision pattern to a broad one, and each carry a one-call override named in the deny
+message. `hooks/test-hooks.sh` feeds each one the JSON the runtime would send and asserts on the
+decision.
+
+## The improvement loop
+
+The system is built to get better without anyone editing it unsupervised:
+
+```
+correction ──► lessons.md ──► recurs? ──► hook (mechanizable) or pinned (judgment)
+                   │                              ▲
+                   ▼                              │
+        Friday: /week-in-review ──► /self-heal ───┘  (Observe > Propose > Evaluate > Gate > Apply > Record)
+                                        │
+                                        └── every change waits for your "Y"; safety rules can only be strengthened
+```
+
+`scripts/rotate-lessons.py` keeps `lessons.md` small enough to actually be read, because the loop
+depends on the review happening. The companion
+[agent-eval-loop](https://github.com/willLin-creator/agent-eval-loop) turns the "recurs?" step
+into a per-rule number and recommends promotions and relaxations in both directions; a hook that
+keeps leaking corrections is a hook with a gap. Autonomous output (scheduled posts, knocks) runs
+through Generate → Evaluate → Reconcile (`CLAUDE.md` Part 7.I): a skeptical evaluator challenges,
+the primary agent with the most context decides.
+
 ## The integration layer
 
 MCP servers connect the system to reality: Gmail, Google Calendar, Slack, Granola/
@@ -86,7 +120,8 @@ The repo is a **template**. The boundary between "framework" (shared) and "your 
 | `CLAUDE.md`, `persona/*` templates | your filled-in `SOUL/IDENTITY/STRATEGY.md` at root |
 | `*.example.yaml` | `goals.yaml`, `my-tasks.yaml` |
 | `EXAMPLE-*` contacts | real `contacts/*.md` |
-| skills, scripts, docs | `memory/`, `learnings/`, `meeting-notes/`, `.env`, all tokens/creds |
+| skills, scripts, hooks, docs | `memory/`, `learnings/`, `meeting-notes/`, `.env`, all tokens/creds |
+| `self-heal/ledger.example.md`, `demo-mode-patterns.example.txt` | your `self-heal/ledger.md` and backups, `demo-mode.json`, `demo-mode-patterns.txt`, `lessons-archive/` |
 
 This is why the system can be open-source and personal at the same time: the
 intelligence lives in the framework; the private data never leaves your machine.
@@ -99,5 +134,7 @@ intelligence lives in the framework; the private data never leaves your machine.
   rather than asking you to maintain a parallel todo list.
 - **Leverage over loudness.** Prioritization biases toward what compounds, not what's
   noisiest.
-- **Improve through small edits.** Corrections become rules (`lessons.md`); the
-  mistake rate drops over time.
+- **Improve through small edits.** Corrections become rules (`lessons.md`); rules that
+  recur become mechanisms (`hooks/`); the mistake rate drops over time.
+- **The system never edits itself unsupervised.** `/self-heal` prepares and evaluates
+  changes; you approve each one.

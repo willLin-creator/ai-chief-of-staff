@@ -1,0 +1,28 @@
+# demo-mode sensitive patterns (one extended regex per line, case-insensitive).
+# Copy to $COS_HOME/demo-mode-patterns.txt. Scanned by hooks/demo-register-stop.sh ONLY while
+# demo mode is active. Add audience-specific terms before a sensitive demo. Keep patterns
+# narrow: a false block mid-demo is worse than a near miss (the register instruction is the
+# primary control; this file is the backstop).
+
+# Confidential business matters (CLAUDE.md 1.5 keywords + anything org-sensitive)
+fundrais(e|ing)
+term sheet
+acquisition
+board (deck|alignment)
+runway
+\b(PIP|termination|restructur)
+compensation|comp band|salary
+litigation|settlement
+
+# Your own career track
+resign|offer letter|counter-?offer
+
+# Personal / intimate register about people
+divorce|pregnan|diagnos|rehab|therapy
+
+# Real customer or account names you never want read aloud on a shared screen
+# acme-real-customer-name
+# another-account
+
+# Internal identifiers
+\bTICKET-[0-9]{2,}\b

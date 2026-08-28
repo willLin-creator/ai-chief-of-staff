@@ -172,6 +172,16 @@ Flag any action items where:
 
 Review every action item and tag each one as **product-change** or **non-product**.
 
+**If you run the product track (`/idea` -> `/bet`), do NOT create a tracker artifact from this skill.**
+All product work flows through the bet pipeline: capture each product-change item as a signal via
+`/idea` (the Sense store), let the `/bet` Select gate decide what graduates, and let `/bet` Spec route
+the survivors to the tracker in the current format. Creating tickets here bypasses the Select gate,
+which is the whole point of having one. In that setup the rest of this step is classification only
+(the two-track routing and the ticket format below are the Spec stage's concern), and the summary
+line in Step 7 reads "BET SIGNALS CAPTURED" instead of "TICKETS CREATED".
+
+If you do not run the product track, the direct-creation flow below applies as written.
+
 **FIRST — route product-change items by destination:**
 
 Product work splits into two tracks. Decide which before creating anything:
@@ -460,6 +470,8 @@ YOUR TASKS ADDED ([count])
 
 TICKETS CREATED ([count] of [total action items] qualified as product-change)
 - [ticket ID] — [title] → [assignee]
+   (or, with the product track: BET SIGNALS CAPTURED ([count]) — each item → /idea → /bet Sense;
+    the Select gate and Spec create any tracker artifact)
 - (or "No product-change items found")
 
 MESSAGES DRAFTED ([count] individual + [count] broadcast)

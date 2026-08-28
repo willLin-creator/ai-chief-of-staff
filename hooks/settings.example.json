@@ -1,0 +1,66 @@
+{
+  "_comment": "Hook wiring for Claude Code. Merge the `hooks` and `attribution` keys into ~/.claude/settings.json. Paths assume hooks/ and scripts/ are symlinked into ~/.claude/ (see docs/SETUP.md). Every hook fails open: a broken hook never blocks work.",
+  "attribution": { "commit": "", "pr": "" },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/block-git-attribution-and-main.sh", "statusMessage": "Checking git attribution / branch" },
+          { "type": "command", "command": "~/.claude/hooks/no-dashes-outbound.sh", "statusMessage": "Checking outbound doc for dash connectors" },
+          { "type": "command", "command": "~/.claude/hooks/no-praise-outbound.sh", "statusMessage": "Checking outbound doc for praise aimed at the reader" }
+        ]
+      },
+      {
+        "matcher": "mcp__.*(create_draft|gmail_send|gmail_draft|slack_send_message|slack_schedule_message|slack_create_canvas|slack_update_canvas|createJiraIssue|editJiraIssue|addCommentToJiraIssue|createConfluencePage|updateConfluencePage|create_file)",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/no-dashes-outbound.sh", "statusMessage": "Checking outbound message/doc for dash connectors" },
+          { "type": "command", "command": "~/.claude/hooks/no-praise-outbound.sh", "statusMessage": "Checking outbound message for praise aimed at the reader" }
+        ]
+      },
+      {
+        "matcher": "Artifact",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/block-hosted-artifacts.sh" }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/gap-claim-requires-grep.sh" }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/demo-mode-context.sh", "statusMessage": "Checking demo-mode register" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/demo-register-stop.sh", "statusMessage": "Demo-register scan of final response" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/sync-claude-to-agents-md.sh", "statusMessage": "Checking if the AGENTS.md mirror needs re-sync" },
+          { "type": "command", "command": "f=$(jq -r '.tool_input.file_path // .tool_response.filePath // empty'); case \"$f\" in *my-tasks.yaml) python3 ~/.claude/scripts/validate_tasks.py --quiet;; *) true;; esac", "statusMessage": "Checking my-tasks.yaml for duplicate IDs" }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 ~/.claude/scripts/validate_tasks.py --intake", "statusMessage": "Checking today's task intake against the cap" },
+          { "type": "command", "command": "python3 ~/.claude/scripts/rotate-lessons.py --check --quiet", "statusMessage": "Checking lessons.md is still readable" }
+        ]
+      }
+    ]
+  }
+}

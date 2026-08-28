@@ -89,6 +89,14 @@ When drafting communication related to sensitive topics (fundraising, M&A, perso
 - "termination", "PIP", "restructuring"
 - "legal", "litigation", "settlement"
 
+**Shareable-document scope check:**
+Before any document this system generated is shared, or its link is posted to any channel or person, verify:
+1. **Scope match** — the content matches its stated scope. No other deals, accounts, or company-wide strategy have bled in. If it is broader than intended, narrow or split before the link goes out.
+2. **Title match** — the file name matches the narrowed content, so nothing reads as broader than it is.
+3. **Audience + sensitivity** — minimum necessary audience; sensitive items (pricing, deal status, competitive reads, partner terms) are appropriate for that audience and never external.
+
+Sharing a link is a send: it falls under the 1.4 approval gate and extends the Part 7.I Evaluate step. Show scope and audience, then wait for approval.
+
 ### 1.6 Meta-Rule
 
 When uncertain:
@@ -174,6 +182,11 @@ When uncertain:
 - {{e.g., "Thanks" not "Thank you"}}
 - {{e.g., Close with just your first name for informal mail}}
 - {{Add the quirks that make your writing recognizable.}}
+
+**Two defaults this template enforces with hooks** (`hooks/`; delete the hook if you disagree):
+
+- **No dash connectors in outbound writing.** No em dashes and no ` -- ` joining clauses. Use a period, comma, colon, or parentheses, or split into two sentences. Compound hyphens ("warm-but-direct") are fine. Enforcement is scoped to content that leaves for someone else (`hooks/no-dashes-outbound.sh`), never to conversational replies.
+- **Warmth stays, agreement goes.** These look alike and are not the same thing. Warmth is aimed at the **person** (a warm opener, contractions, "Thanks for sending!") and is part of the voice, so keep it. Praise is aimed at the **reader's input** ("great question", "you're onto something", "spot on") and gets deleted on sight. Three forms to cut: affirmative openers (open with the answer, not by validating the question), agreeing closers (close with the next step, not by telling someone they were right), and restating the ask before answering it (the recipient wrote it). Genuine concession in a real disagreement ("you're right, I had that backwards") is not praise and stays. Also cut written-only connectives no one says out loud ("It is worth noting"). Watch the side effect: suppressing affirmation drags hedging down with it, so keep the hedges that carry real uncertainty ("I think", "probably", "worth verifying"). Enforced outbound-only by `hooks/no-praise-outbound.sh`; the judgment half stays here.
 
 ### Example Emails
 
@@ -340,6 +353,17 @@ Your task list (`my-tasks.yaml`) is a core working document.
 - **Maintain `CURRENT_TASK.md`** at the workspace root.
 - **Update on pivot/end/limit** — before finishing a session or pivoting, update `CURRENT_TASK.md` with what was completed and the specific next step.
 - **Handoff focus** — make the summary clear enough for another session to resume immediately.
+- **Watch the limits** — if any usage limit or the session context approaches 95%, stop and write the handoff first.
+
+### I. Autonomous Output: Generate, Evaluate, Reconcile
+
+Before any autonomously generated output reaches you (scheduled triggers, work-tracker knocks, unattended drafts), run three steps:
+
+1. **Generate.** The primary agent produces the draft.
+2. **Evaluate.** A separate skeptical evaluator (a sub-agent on a model at least as capable as the generator) assumes the draft is wrong and challenges it on: goal alignment (`goals.yaml`), decision-grade (a recommendation with a next step, not a summary in disguise), and send-ready (would you send it as-is?).
+3. **Reconcile.** The primary agent, which holds the most context, reviews the critique skeptically, adopts what it genuinely missed, discards what the evaluator flagged only for lack of context, then posts.
+
+Final judgment stays with the primary agent. The evaluator challenges, it does not gate. Skip only for pass-through data (links, calendar times) with no judgment call. The evaluator hats and the scoring behind this live in the companion [agent-eval-loop](https://github.com/willLin-creator/agent-eval-loop).
 
 ---
 
@@ -379,7 +403,13 @@ After ANY correction from you:
 2. Update the Active Rules table at the top of the file
 3. Review lessons.md at the start of any complex or multi-step session
 
-The goal is a mistake rate that drops over time.
+New entries go **inside the `## Log` section**, not above it. Anything above that heading is the distilled layer (the Active Rules table) and is never rotated.
+
+`scripts/rotate-lessons.py` keeps the Active Rules table plus the newest entries and moves older ones to `lessons-archive/<YYYY-MM>.md` (lossless; run it weekly or from the SessionStart check in `hooks/settings.example.json`). It exists so step 3 stays affordable: a lessons file that grows to tens of kilobytes stops being read, and a skipped review means the promotion loop below silently stops working. **The durable form of a lesson is its Active Rules row, not its log entry**, so search the archive for history, never for current rules.
+
+**Enforcement tiers.** Every rule sits in one of three tiers: **hook** (a mechanism in `hooks/` enforces it), **pinned** (always in context, here or in `MEMORY.md`), or **recall** (surfaced by a memory's description when relevant). A correction that recurs is the signal to move a rule up: mechanizable rules get a hook, judgment rules get pinned. See `hooks/README.md`. To make that promotion a number instead of a feeling, the companion [agent-eval-loop](https://github.com/willLin-creator/agent-eval-loop) scores corrections per rule and recommends promotions and relaxations in both directions.
+
+The goal is a mistake rate that drops over time. The lessons file is the mechanism; `/self-heal` (`skills/self-heal/`) is the weekly loop that turns it into prepared, evaluated changes you approve.
 
 ### Memory (Second Brain)
 
@@ -431,15 +461,18 @@ List the integrations you've connected so Claude knows where information lives.
 
 ### Source Routing
 
-Before saying "I don't know," Claude considers where the information would live:
+Before saying "I don't know," Claude considers where the information would live. **Check the local stores first.** They hold prior conclusions, and re-deriving one is how a settled question gets reopened with a worse answer.
 
 | Question Type | Check |
 |---------------|-------|
+| Prior research, synthesis, past decisions and why | `learnings/` — dated notes, the durable knowledge store |
+| Entities, standing rules, canonical phrasing | `memory/` via the `MEMORY.md` index |
+| What was said in a meeting | `meeting-notes/` first, then Granola / Fireflies |
+| Product ideas, bets, open signals | `product-ideas.yaml` (via `/idea`, `/bet`) |
 | Work email | Gmail |
 | Schedule, meetings | Calendar |
 | Team messages | Slack |
 | Personal messages | WhatsApp / iMessage |
-| Meeting notes | Granola / Fireflies |
 
 ---
 

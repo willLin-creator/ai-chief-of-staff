@@ -154,7 +154,10 @@ Forward (new work):
 - `/bet` : show the funnel (Sensed -> Selected -> Spec'd) and what needs your decision
 - `/bet sense` : run the Sense fleet, dedupe, refresh the candidate queue
 - `/bet project [description]` : intake one new project and push it through Select -> Spec
-- `/bet select [id | all]` : run the Select gate; produce PASS / HOLD / DROP for your approval
+- `/bet select [id | all]` : run the Select gate; produce PASS / HOLD / DROP / PARK for your approval
+- `/bet park [id]` : set a gate-worthy but not-now bet aside as dormant with an activation trigger (defers timing, not merit)
+- `/bet activate [id]` : wake a parked bet when its trigger fires and run the value-now evaluation (it never auto-builds)
+- `/bet parked` : list dormant bets and their wake triggers (read at Spec and backlog-groom to catch coupled triggers)
 - `/bet spec [id]` : draft a board-ready spec for a PASSED bet, routed to the right destination
 - `/bet foresight` : the forward half of Sense; surface where-the-puck-is-going bets into exploration
 - `/bet run` : the full forward loop: sense, then select, then (on approval) spec the top passed bets
@@ -193,9 +196,17 @@ create a parallel state file. It adds one block per idea, written only at the Se
     tradeoff: "..."
     rationale: "one line"
     gated_on: "YYYY-MM-DD"
+    parked:                        # OPTIONAL, orthogonal to verdict: defers timing, not merit
+      trigger: "what must happen to make this worth doing"
+      trigger_kind: coupled | time # coupled = a surface or bet gets touched; time = revisit-by date
+      rationale: "why real but deferred now (the value-later judgment)"
+      parked_on: "YYYY-MM-DD"
+      activated_on: null           # set when the trigger fires
 ```
 
-Read the funnel from state; never eyeball the YAML by hand.
+A `parked` block with no `activated_on` overrides the verdict-derived stage with **PARKED** (dormant,
+out of the active queue) until its trigger fires. Read the funnel from state; never eyeball the YAML
+by hand.
 
 ---
 
@@ -368,6 +379,14 @@ system-2 feasibility + cohesion, recommended verdict, track, route, one-line rat
 - **HOLD** when promising but missing validation, carrying unresolved domain concerns, or showing
   `tension` cohesion that needs reshaping. Name exactly what is needed.
 - **DROP** on system-1 fail, domain `fail`, or cohesion `conflict`.
+- **PARK** when the bet is real and gate-worthy but its clock has not started: importance without
+  urgency (a guardrail on stable, unchanged code; a hardening task; an initiative whose payoff is real
+  but not now). PARK is **orthogonal to PASS / HOLD / DROP**: it judges *timing*, not *merit*, so you
+  can park a pass, a hold, or a sensed bet. It records an **activation trigger** (what must happen to
+  make this worth doing: a coupled surface gets touched, or a revisit-by date) and the value-later
+  rationale. A parked bet leaves the active queue and stops competing for attention until the trigger
+  fires. Do not conflate importance with urgency: a real-but-not-now bet is a PARK, never a DROP and
+  never a must-have.
 
 **The exploration lane (a different door, protects ambition).** The gates above are correct for the
 validated *core* lane, but they would kill the ambitious, not-yet-validated bet, which is the opposite
@@ -381,6 +400,42 @@ Human gate: you approve / override, then the gate block is written to `product-i
 rule is enforced: refuse `core` without validation=pass, and refuse a PASS that fails buyer-confidence,
 identity, the domain verdict, or shows cohesion `conflict`. **The failure mode to watch first: a bet
 skipping the gate to keep a demo on schedule. Refuse to spec an un-gated bet; surface it instead.**
+
+### Activation: the value-now evaluation (a fired trigger is not a green light)
+
+Parking sets a trip-wire; it does not schedule the work. When a parked bet's trigger fires, that is a
+prompt to **evaluate**, never a command to **execute**. The evaluation scales its rigor to the size of
+the work and is, at bottom, a **capital-allocation call**: every product decision reduces to some form
+of money (investment, scarce resources, future return).
+
+1. **Size it first (this sets the rigor).**
+   - **Rider**: small enough that "we are already in this surface" makes the marginal cost trivial
+     (rides along with the triggering work; roughly a day or less, no new surface). Near-automatic yes;
+     do it *with* the triggering work.
+   - **Initiative**: large enough that "we are touching it anyway" is NOT sufficient justification. It
+     gets the full evaluation below. This is the whole point of the step: a trigger can fire on a big
+     initiative, and being in the neighborhood never makes it worth the capital on its own.
+
+2. **The capital-allocation call (for initiatives).** State it in money terms, native to the class:
+   - **Investment**: engineering time plus **opportunity cost**. When capacity is the binding constraint
+     every yes is a no elsewhere, so name what it displaces.
+   - **Return**: a feature returns future revenue or retention; security and compliance return loss
+     avoided (risk x exposure x likelihood, plus deal-blocker removal); platform health and tooling
+     return leverage (time saved); plus **strategic optionality** (what it opens).
+   - **Why now vs later**: does doing it *now* change the cost or the return? Being in the code now can
+     lower the cost (the rider discount); a distant return can argue the capital is better deployed
+     elsewhere today.
+
+3. **Output a disposition, with the economic rationale explicit:**
+   - **ride-now**: spec it with the triggering work.
+   - **promote**: worth doing now as its own committed work; spec it.
+   - **re-park**: the trigger fired but the value math still says not yet; re-park with a sharper
+     trigger. This path is what makes a trigger a *signal*, not an order.
+   - **drop**: the trigger revealed it is no longer worth doing at all.
+
+The same lens applies at *first* Select, not only on activation: an item can be gate-worthy on merit
+yet fail the "is the return worth the capital **now**" test. That is a PARK, not a PASS. Importance
+earns a place in the system; only the capital-allocation call earns a slot **now**.
 
 ---
 
@@ -456,7 +511,7 @@ tracker or directory write without showing it first.
 1. Stage 1 Sense fleet -> present ranked candidates.
 2. Pause for you to mark which to gate.
 3. Stage 2 Select on those -> present the verdict table.
-4. Pause for you to approve PASS / HOLD / DROP; persist the gate block.
+4. Pause for you to approve PASS / HOLD / DROP / PARK; persist the gate block.
 5. For approved PASS bets, Stage 3 Spec the top N (ask how many) -> present each draft / routed entry
    for approval before any external write.
 

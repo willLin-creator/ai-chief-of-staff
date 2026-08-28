@@ -150,7 +150,35 @@ constraints, decisions that were made offline.
 ```
 
 If the user provides context, incorporate it into Step 2 synthesis alongside meeting notes.
-If the user skips, proceed directly to Step 2.
+If the user skips, proceed directly to Step 1d.
+
+---
+
+### Step 1d: Unknowns Interview (surface unknowns before drafting)
+
+Meeting notes, insights, and any supplementary context are now loaded. Before synthesizing,
+run a short interview to surface the unknowns that would change the PRD. The discipline: the
+expensive PRD revisions come from questions nobody asked before drafting, not from drafting
+badly.
+
+From everything loaded, identify the highest-leverage gaps: questions where the user's answer
+would change the scope, the architecture, or a P0. Then interview ONE question at a time,
+hardest first (architecture-changing before cosmetic), waiting for each answer before asking
+the next. Stop when the remaining unknowns no longer change the shape of the PRD.
+
+```
+UNKNOWNS INTERVIEW (answer inline, or say "skip" to move on)
+
+Q: [the single highest-leverage open question, framed so the answer changes the PRD]
+Why it matters: [one line: what in the PRD flips depending on the answer]
+```
+
+Fold each answer into Step 2 synthesis. Anything genuinely open after the interview goes to the
+PRD's Open Questions table with an owner, not silently omitted.
+
+**Skip Step 1d if:** the user says "skip interview", or Step 0.5 brainstorm already resolved the
+unknowns (a tightly scoped, single-ticket PRD often needs none). Otherwise run it: one or two
+architecture-changing questions here save a full PRD revision later.
 
 ---
 
@@ -446,9 +474,14 @@ PRD: [Google Docs URL]
 
 ### Acceptance Criteria
 
+Every AC that gates a control or behavior on a condition MUST state the behavior in the
+other branch too. Unstated branches get filled with a plausible default, and the plausible
+default is where the defects ship.
+
 1. **[Requirement Group]**
    - [specific, testable requirement from PRD functional requirements]
-   - Validation: [edge case handling]
+   - Validation: [edge cases, plus states the user did not create: referenced
+     entity deleted, snapshot missing, list empty, permission absent]
 
 2. **[Requirement Group]**
    - [specific requirement]

@@ -45,7 +45,7 @@ If there are overdue tasks, flag them prominently and ask:
 
 When adding a task:
 
-1. Generate a unique task ID (format: `task-XXX`)
+1. Allocate the task ID from `python3 scripts/validate_tasks.py --next-id` (format: `task-XXX`). That returns the **max ID across the whole file** plus one. Never derive the next ID from the last entry in the file: `my-tasks.yaml` is **not ID-ordered** (completions get archived out and edits reinsert mid-file), so the tail is not a safe proxy for the max. Re-run `validate_tasks.py` after writing to confirm the file is still clean.
 2. Ask for any missing required info:
    - Title (required)
    - Due date (required — always set one, even if approximate)

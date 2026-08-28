@@ -34,6 +34,15 @@ gcp-oauth.keys.json
 /sessions/
 /projects/
 /history.jsonl
+/lessons-archive/
+/work-tracker_state.md
+/eval-corpus/
+# Self-heal: ship the example ledger only
+/self-heal/*
+!/self-heal/ledger.example.md
+# Demo mode: the live flag and your real pattern list
+/demo-mode.json
+/demo-mode-patterns.txt
 
 # Real contact files (keep the EXAMPLE ones)
 /contacts/*.md

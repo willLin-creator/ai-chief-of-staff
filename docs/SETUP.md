@@ -46,9 +46,11 @@ cp SOUL.md IDENTITY.md STRATEGY.md ~/.claude/ 2>/dev/null
 # Data files
 cp goals.yaml my-tasks.yaml ~/.claude/
 
-# Slash commands and skills (symlink so repo edits stay live)
+# Slash commands, skills, hooks, scripts (symlink so repo edits stay live)
 ln -s "$PWD/commands/"* ~/.claude/commands/
 ln -s "$PWD/skills/"*   ~/.claude/skills/
+ln -s "$PWD/hooks"      ~/.claude/hooks
+ln -s "$PWD/scripts"    ~/.claude/scripts
 mkdir -p ~/.claude/contacts && cp contacts/EXAMPLE-*.md ~/.claude/contacts/
 
 # Second brain (persistent memory) — see skills/second-brain/SKILL.md
@@ -62,6 +64,24 @@ The second brain (`memory/`, `lessons.md`, `learnings/`, `meeting-notes/`,
 See **`skills/second-brain/SKILL.md`** for the memory format and discipline.
 
 (Adjust to taste — some people keep everything in the repo and point Claude Code at it as a project. Symlinking `commands/` and `skills/` keeps your edits versioned.)
+
+## 4b. Turn on the hooks (recommended)
+
+The hooks are the rules that stopped being instructions: no dash connectors or reader-praise in
+outbound writing, no AI attribution in commits, no pushes to `main`, deliverables as local files,
+a demo-safe register. They fail open and each has a one-call override.
+
+```bash
+chmod +x hooks/*.sh
+bash hooks/test-hooks.sh          # every case should pass before you wire anything
+```
+
+Then merge `hooks/settings.example.json` into `~/.claude/settings.json` (the `hooks` and
+`attribution` keys). Hooks need `jq`. Read `hooks/README.md` for what each one does, and delete
+any you disagree with; the voice hooks in particular encode one author's taste.
+
+Optional: `cp skills/demo-mode/demo-mode-patterns.example.txt ~/.claude/demo-mode-patterns.txt`
+and add the terms you never want read aloud on a shared screen.
 
 ## 5. Connect MCP servers
 
@@ -93,6 +113,7 @@ The proactive layer posts to a Slack channel of your own.
 1. Create a dedicated Slack channel for your chief of staff (e.g. `#yourname-cos`).
 2. Set the placeholders: `{{COS_SLACK_CHANNEL}}`, `{{SLACK_USER_ID}}`, `{{TIMEZONE}}` (in the work-tracker and scheduled-agents skills).
 3. Follow `skills/scheduled-agents/SKILL.md` to create the recurring agents (morning brief, midday triage, evening wrap).
+4. Add the Friday coach (`skills/week-in-review/SKILL.md`) as a fourth trigger, then run `/self-heal` after it each week.
 
 ## 8. First run
 

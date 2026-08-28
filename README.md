@@ -34,6 +34,7 @@ Most "AI assistant" repos are a prompt or a chatbot wrapper. Two things set this
 
 1. **It's a second brain, not a session.** A file-based memory layer (atomic facts indexed by `MEMORY.md`, plus lessons, learnings, and a meeting-notes context library) means it remembers across sessions and compounds. It gets sharper over time instead of starting cold every chat.
 2. **It runs autonomously to 10x your day.** This isn't a tool you open. Scheduled agents and the "knock on the door" work-tracker run your brief, triage, and focus recommendations in the background, then surface the highest-leverage thing at the right moment in a Slack channel you own. You trigger almost nothing.
+3. **It improves itself, with you holding the pen.** Corrections become lessons, lessons that recur become hooks (mechanisms, not instructions), a Friday coach reviews your week, and a weekly self-heal loop proposes small, evaluated changes to the system that you approve or reject. Nothing about the system changes without your "Y".
 
 ## What it does
 
@@ -47,6 +48,11 @@ Most "AI assistant" repos are a prompt or a chatbot wrapper. Two things set this
 | **Proactive delivery** | `work-tracker` skill — a "knock on the door" CoS that plans your day, scores deliverables, and posts briefings/nudges/focus recs to Slack at the right moments |
 | **Scheduled agents** | runs the above automatically (morning brief, midday triage, evening wrap, market-pulse scan) and posts to your CoS Slack channel |
 | **Product track** *(optional)* | `commands/product/` — `/prd`, `/roadmap`, `/roadmap-edit`, `/idea`, `/insights`, `/bet` for product-management work |
+| **Enforcement (hooks)** | `hooks/` — the rules that stopped being instructions: no dash connectors or praise in outbound writing, no AI attribution in commits, no pushes to main, deliverables as local files, a demo-safe register. Fail open, one override each, tested by `hooks/test-hooks.sh` |
+| **Weekly coach** | `skills/week-in-review/` — Friday retrospective: what got done (from evidence), where the week went vs goals, at most 3 changes for next week |
+| **Self-heal** | `skills/self-heal/` — Observe → Propose (real diffs) → Evaluate (skeptical second agent) → Gate (you) → Apply → Record. Improves the system, never you, never safety rules |
+| **Demo mode** | `skills/demo-mode/` — say "I'm demoing this for Acme" once and every session speaks in a sanitized register until you say the demo is over |
+| **Capture** | `/capture` — turn a URL, PDF, or idea into a synthesized, cross-linked learnings note; route product signals to `/idea` |
 | **Second brain** | `skills/second-brain/` — persistent memory: atomic facts indexed by `MEMORY.md`, plus lessons, learnings, and a meeting-notes context library that compound across sessions. Corrections are scored, and enforcement graduates on evidence, by the companion [agent-eval-loop](https://github.com/willLin-creator/agent-eval-loop) |
 | **Voice matching** | `skills/voice/` — builds a `voice-profile.md` from your real messages so every drafted email/Slack/doc sounds like you, not like an AI |
 
@@ -82,14 +88,20 @@ ai-chief-of-staff/
 ├── voice-profile.example.md   # → built by the voice skill from your real messages
 ├── contacts/                  # EXAMPLE contact (real ones are gitignored)
 ├── commands/                  # mostly run on a schedule; /meeting is the main on-demand one
+│   ├── capture.md             # second-brain ingest: URL/PDF/idea -> linked learnings note
 │   └── product/               # product track: /prd /roadmap /roadmap-edit /idea /insights /bet
+├── hooks/                     # the enforcement layer: fail-open guards + settings.example.json + tests
 ├── memory/                    # second brain: MEMORY.md index + atomic facts (real ones gitignored)
+├── self-heal/                 # ledger.example.md; your real ledger + backups are gitignored
 ├── skills/
 │   ├── work-tracker/          # proactive "knock on the door" CoS
 │   ├── scheduled-agents/      # cron + Slack delivery layer
+│   ├── week-in-review/        # the Friday coach
+│   ├── self-heal/             # weekly system tune-up loop, human-gated
+│   ├── demo-mode/             # presentation-safe register, system-wide via two hooks
 │   ├── second-brain/          # persistent memory architecture
 │   └── voice/                 # capture + apply your writing voice
-├── scripts/                   # Google Docs/Sheets helpers (secrets via env)
+├── scripts/                   # Google Docs/Sheets helpers, rotate-lessons.py, validate_tasks.py
 └── docs/                      # SETUP.md, INTEGRATIONS.md (role-based), ARCHITECTURE.md
 ```
 
@@ -121,6 +133,7 @@ See `ONBOARDING.md` for the mapping.
 - **No personal data ships in this repo.** Your real `goals.yaml`, `my-tasks.yaml`, `contacts/*`, `memory/`, `meeting-notes/`, and filled-in persona files are all gitignored. The repo carries only `*.example.*` templates and `EXAMPLE-` files.
 - **Secrets never commit.** `.gitignore` blocks every `*token*`, `*cred*`, `*secret*`, `*.key`, `*oauth*`, and `.env`. Scripts read credential paths from environment variables only.
 - **Nothing sends without approval.** Posting status to your own CoS Slack channel is fine; any message to another person always requires your explicit "send."
+- **The system never edits itself unsupervised.** `/self-heal` prepares diffs and an evaluator challenges them, but every change waits for your approval, and the safety rules (send approval, confidentiality, the hooks) can only ever be strengthened by it.
 
 ## Requirements
 
@@ -131,7 +144,19 @@ See `ONBOARDING.md` for the mapping.
   see **[docs/INTEGRATIONS.md](docs/INTEGRATIONS.md)** for a role-based setup guide
   (Founder, PM, Engineer, Sales, Personal). Common ones: Gmail, Google Calendar,
   Slack, Granola/Fireflies, a task tracker.
-- Python 3 for the helper scripts (`google-auth google-auth-oauthlib google-api-python-client`)
+- Python 3 for the helper scripts (`google-auth google-auth-oauthlib google-api-python-client`); `jq` for the hooks
+
+## Companion repos
+
+The framework here is one of four that started as pieces of the same private system:
+
+| Repo | What it is |
+|---|---|
+| [agent-memory-vault](https://github.com/willLin-creator/agent-memory-vault) | the second brain's engine: bounded index, generated pointers, recall by description, a deterministic auditor and a human-gated consolidation pass |
+| [agent-eval-loop](https://github.com/willLin-creator/agent-eval-loop) | corrections as scored cases, evaluator hats for work with no oracle, enforcement tiers that graduate on evidence |
+| [agent-harness](https://github.com/willLin-creator/agent-harness) | the engineering loop: plan review, code review, debugging, unify |
+
+Each works alone. Together, `lessons.md` here feeds the eval loop, the eval loop tells you which rules deserve a hook in `hooks/`, and the vault keeps the memory the whole thing runs on honest.
 
 ## License
 

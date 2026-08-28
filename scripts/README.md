@@ -42,6 +42,35 @@ python3 gsheets.py update --sheet-id SHEET_ID --range "Sheet1!B2:B5" --values '[
 `SHEET_ID` and `DOC_ID` may be either a bare ID or a full Google URL — the ID is
 extracted automatically.
 
+### `rotate-lessons.py` — keep `lessons.md` readable
+
+Keeps everything above `## Log` (the Active Rules table) untouched, keeps the newest log entries up
+to a byte budget, and moves older entries to `lessons-archive/<YYYY-MM>.md`. Lossless. Exists
+because a lessons file that grows past what anyone will read silently breaks the correction loop.
+
+```bash
+python3 rotate-lessons.py --dry      # what would move
+python3 rotate-lessons.py            # rotate
+python3 rotate-lessons.py --check    # exit 1 if over budget (SessionStart hook)
+```
+
+Reads `COS_HOME` (default `~/.claude`) for the location of `lessons.md`.
+
+### `validate_tasks.py` — guard `my-tasks.yaml`
+
+Duplicate-id check (a line scan, since a YAML load would hide duplicate keys), required-field
+check, a daily net-new intake cap, and `--next-id` for safe id allocation (max across the whole
+file plus one; the file is not id-ordered so "last entry + 1" is wrong).
+
+```bash
+python3 validate_tasks.py                 # exit 1 on duplicates / missing fields / over the cap
+python3 validate_tasks.py --next-id       # the next safe task id
+python3 validate_tasks.py --intake        # report today's intake (SessionStart hook)
+```
+
+Config: `COS_HOME`, `TASKS_INTAKE_CAP` (default 3, `0` disables), `TASKS_INTAKE_START`. Needs
+`pyyaml` for the field and cap checks; the id check works without it.
+
 ## Dependencies
 
 ```bash
